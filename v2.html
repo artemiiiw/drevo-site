@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Наталья Фесик — Древо Жизни</title>
+	<link rel="stylesheet" href="style.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+	<style>
+		/* ===== V2 OVERRIDES ===== */
+
+		/* Real photo styling */
+		.photo-real {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			border-radius: 14px;
+		}
+
+		/* Photo gallery grid */
+		.gallery-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: 260px 220px;
+			gap: 12px;
+		}
+
+		.gallery-item {
+			border-radius: 14px;
+			overflow: hidden;
+			box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+		}
+
+		.gallery-item img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			transition: transform 0.4s ease;
+		}
+
+		.gallery-item:hover img {
+			transform: scale(1.04);
+		}
+
+		.gallery-item.span2 {
+			grid-column: span 2;
+		}
+
+		/* Book section with real mountain background */
+		.section-book-v2 {
+			position: relative;
+			padding: 95px 0;
+			color: white;
+			overflow: hidden;
+		}
+
+		.section-book-v2 .mountain-photo {
+			position: absolute;
+			inset: 0;
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			object-position: center 30%;
+		}
+
+		.section-book-v2 .overlay {
+			position: absolute;
+			inset: 0;
+			background: rgba(5, 15, 40, 0.72);
+		}
+
+		.section-book-v2 .container {
+			position: relative;
+			z-index: 1;
+		}
+
+		/* Real book cover */
+		.book-cover-real {
+			width: 215px;
+			border-radius: 4px 14px 14px 4px;
+			box-shadow:
+				-6px 0 14px rgba(0,0,0,0.5),
+				0 20px 60px rgba(0,0,0,0.6),
+				0 0 50px rgba(40,100,220,0.18);
+			display: block;
+		}
+
+		/* ===== EARTH V2 ===== */
+		.section-earth-v2 {
+			background: linear-gradient(180deg, #060e20 0%, #0a1830 40%, #0e2040 100%);
+			color: white;
+			padding: 95px 0 70px;
+			overflow: hidden;
+		}
+
+		.countries-cloud {
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: center;
+			gap: 12px;
+			margin: 40px auto 50px;
+			max-width: 800px;
+		}
+
+		.country-chip {
+			background: rgba(255,255,255,0.07);
+			border: 1px solid rgba(255,255,255,0.15);
+			padding: 9px 20px;
+			border-radius: 999px;
+			font-family: 'Inter', sans-serif;
+			font-size: 14px;
+			color: rgba(255,255,255,0.85);
+			display: flex;
+			align-items: center;
+			gap: 7px;
+			white-space: nowrap;
+		}
+
+		.country-chip .pin {
+			font-size: 13px;
+			opacity: 0.7;
+		}
+
+		/* Reviews grid */
+		.reviews-grid {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			gap: 20px;
+			margin-top: 10px;
+		}
+
+		.review-card {
+			background: rgba(255,255,255,0.05);
+			border: 1px solid rgba(255,255,255,0.1);
+			border-radius: 16px;
+			padding: 24px;
+			transition: background 0.3s;
+		}
+
+		.review-card:hover {
+			background: rgba(255,255,255,0.08);
+		}
+
+		.review-header {
+			display: flex;
+			align-items: flex-start;
+			gap: 12px;
+			margin-bottom: 14px;
+		}
+
+		.review-flag {
+			font-size: 26px;
+			flex-shrink: 0;
+			margin-top: 2px;
+		}
+
+		.review-name {
+			font-size: 16px;
+			font-weight: 600;
+			font-family: 'Inter', sans-serif;
+			color: white;
+			margin-bottom: 3px;
+		}
+
+		.review-loc {
+			font-size: 12px;
+			color: rgba(255,255,255,0.45);
+			font-family: 'Inter', sans-serif;
+			letter-spacing: 0.3px;
+		}
+
+		.review-text {
+			font-size: 15px;
+			color: rgba(255,255,255,0.72);
+			line-height: 1.75;
+		}
+
+		/* Version switcher */
+		.version-bar {
+			position: fixed;
+			bottom: 24px;
+			right: 24px;
+			z-index: 300;
+			display: flex;
+			gap: 10px;
+		}
+
+		.ver-btn {
+			display: block;
+			padding: 10px 18px;
+			border-radius: 999px;
+			font-family: 'Inter', sans-serif;
+			font-size: 13px;
+			text-decoration: none;
+			font-weight: 500;
+			transition: all 0.2s;
+			letter-spacing: 0.3px;
+		}
+
+		.ver-btn.active {
+			background: var(--gold-light, #f0d878);
+			color: #1a1200;
+		}
+
+		.ver-btn.inactive {
+			background: rgba(255,255,255,0.12);
+			color: rgba(255,255,255,0.7);
+			border: 1px solid rgba(255,255,255,0.2);
+		}
+
+		.ver-btn:hover {
+			opacity: 0.85;
+		}
+
+		@media (max-width: 900px) {
+			.gallery-grid {
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 200px 180px 180px;
+			}
+			.gallery-item.span2 { grid-column: 1 / -1; }
+			.reviews-grid { grid-template-columns: 1fr; }
+		}
+
+		@media (max-width: 600px) {
+			.gallery-grid {
+				grid-template-columns: 1fr;
+				grid-template-rows: unset;
+			}
+			.gallery-item { height: 220px; }
+			.gallery-item.span2 { grid-column: 1; }
+		}
+	</style>
+</head>
+<body>
+
+<!-- Version switcher -->
+<div class="version-bar">
+	<a href="index.html" class="ver-btn inactive">Версия 1</a>
+	<a href="v2.html" class="ver-btn active">Версия 2</a>
+</div>
+
+<nav>
+	<a href="#arkady">Об Аркадии Петрове</a>
+	<a href="#about">Обо мне</a>
+	<a href="#book">Книга</a>
+	<a href="#earth">Земля</a>
+	<a href="#contacts">Контакты</a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="top">
+	<div class="hero-content">
+		<h1>Наталья Фесик</h1>
+		<p class="subtitle">Методист программы «Древо Жизни»</p>
+		<p class="tagline">Энергия &nbsp;·&nbsp; Свет &nbsp;·&nbsp; Здоровье &nbsp;·&nbsp; Исцеление</p>
+		<a href="#contacts" class="btn-hero">Написать</a>
+	</div>
+</section>
+
+<!-- ===== ОБ АРКАДИИ ПЕТРОВЕ ===== -->
+<section id="arkady" class="section section-light">
+	<div class="container two-col">
+		<div class="text-block">
+			<h2>Об Аркадии Петрове</h2>
+			<p>Знакомые слова популярной песни «Я знаю точно — невозможное возможно!» могут служить девизом учения Аркадия Петрова «Древо Жизни».</p>
+			<p>О том, как писатель, поэт, журналист Аркадий Петров — автор романов, сборников стихов, журналистских расследований, философско‑просветительных книг — создавал свою систему знаний, лучше всего рассказывает его автобиографическая трилогия «Сотворение Мира».</p>
+			<p>Читая её, вы становитесь собеседником, слушателем, попутчиком автора и совершаете путь человека в его духовном восхождении — от себя настоящего к себе истинному.</p>
+			<p>Постепенно, шаг за шагом, вы выходите из ограниченности и ограничений мира, в котором «всё предопределено». И по мере вспоминания «Кто ты, Человек?» в тебе открывается безграничье свободы, укрепляется вера в себя и понимание того, что ты и только ты был и есть автор своей Книги Жизни.</p>
+		</div>
+		<div class="photo-wrap">
+			<div class="photo-frame portrait"></div>
+		</div>
+	</div>
+</section>
+
+<!-- ===== ОБО МНЕ ===== -->
+<section id="about" class="section section-warm">
+	<div class="container">
+		<div class="two-col" style="margin-bottom: 50px;">
+			<div class="text-block">
+				<h2>Обо мне</h2>
+				<p>Наталья — методист программы «Древо Жизни». Первое знакомство с трилогией Аркадия Петрова «Сотворение Мира» произошло в 2006 году и стало началом глубокого внутреннего пути.</p>
+				<p>Опыт семьи, проходившей через тяжёлые операции и восстановление, показал, как работают знания «Древа Жизни» — как меняется состояние, восстанавливаются силы, продлевается жизнь.</p>
+				<p>Наталья посещала открытые встречи, прошла Базовый курс, ступени обучения и с 2009 года передаёт знания «Древа Жизни» в качестве методиста.</p>
+				<p>Её задача — помогать людям выходить из‑под давления страха и отчаяния, принимать душой знания Учения, осваивать технологии, наполняться внутренним светом и творить свою счастливую жизнь и прекрасное здоровье.</p>
+			</div>
+			<div class="photo-wrap">
+				<div style="width:290px;height:380px;border-radius:14px;overflow:hidden;box-shadow:0 16px 50px rgba(0,0,0,0.12);">
+					<img src="img/natalia-portrait.png" alt="Наталья Фесик" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+				</div>
+			</div>
+		</div>
+
+		<!-- Photo gallery -->
+		<div class="gallery-grid">
+			<div class="gallery-item span2">
+				<img src="img/natalia-moscow.png" alt="Наталья в Москве">
+			</div>
+			<div class="gallery-item">
+				<img src="img/natalia-brazil.png" alt="Бразилия">
+			</div>
+			<div class="gallery-item">
+				<img src="img/natalia-peru.png" alt="Мачу-Пикчу, Перу">
+			</div>
+			<div class="gallery-item">
+				<img src="img/natalia-may9.png" alt="День Победы">
+			</div>
+			<div class="gallery-item">
+				<img src="img/natalia-exhibition.png" alt="Выставка">
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- ===== КНИГА ===== -->
+<section id="book" class="section-book-v2">
+	<img src="img/mountain.png" alt="" class="mountain-photo">
+	<div class="overlay"></div>
+	<div class="container two-col">
+		<div class="book-wrap">
+			<img src="img/book-cover.png" alt="Колыбель над Бездною — Наталья Фесик" class="book-cover-real">
+		</div>
+		<div class="text-block light">
+			<h2>Моя книга</h2>
+			<p class="book-subtitle">«Колыбель над Бездною»</p>
+			<p>«Человек — это нелинейный фрактал Бога» — таково определение, ставшее отправной точкой для книги. Эта элегантная фраза перекликается с античным тезисом: «Человек — это Микрокосм».</p>
+			<p>В книге раскрывается понятие человека как фрактала Макрокосма, соединяются научное и духовное знание, уровни сознания и путь самопознания.</p>
+			<p>Практики и образы помогают подготовить себя к взаимодействию с невидимым и бескрайним пространством, откуда всё начинается, поддерживать связь с Макрокосмом через системы и органы физического тела.</p>
+			<a href="#contacts" class="btn-book">Приобрести</a>
+		</div>
+	</div>
+</section>
+
+<!-- ===== ЗЕМЛЯ ===== -->
+<section id="earth" class="section-earth-v2">
+	<div class="container">
+		<h2 class="earth-h center">Земля — наш общий дом</h2>
+		<p class="earth-sub center">Программа «Древо Жизни» объединяет людей по всему миру</p>
+
+		<div class="globe-wrap">🌍</div>
+
+		<div class="countries-cloud">
+			<span class="country-chip"><span class="pin">📍</span>Сербия</span>
+			<span class="country-chip"><span class="pin">📍</span>Болгария</span>
+			<span class="country-chip"><span class="pin">📍</span>Бразилия</span>
+			<span class="country-chip"><span class="pin">📍</span>Франция</span>
+			<span class="country-chip"><span class="pin">📍</span>Беларусь</span>
+			<span class="country-chip"><span class="pin">📍</span>Австралия</span>
+			<span class="country-chip"><span class="pin">📍</span>Венгрия</span>
+			<span class="country-chip"><span class="pin">📍</span>Австрия</span>
+			<span class="country-chip"><span class="pin">📍</span>Норвегия</span>
+			<span class="country-chip"><span class="pin">📍</span>Литва</span>
+			<span class="country-chip"><span class="pin">📍</span>Германия</span>
+		</div>
+
+		<!-- Reviews 3×3 -->
+		<div class="reviews-grid">
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇧🇦</span>
+					<div>
+						<div class="review-name">Мемич Хасан</div>
+						<div class="review-loc">Босния и Герцеговина, Мостар</div>
+					</div>
+				</div>
+				<p class="review-text">Вся программа «Дерево жизни» достигла мои ожидания, и я безмерно благодарен нашему Творцу, который через Аркадия Наумовича Петрова дал такой замечательный подарок человечеству. Хотя не первая моя встреча с духовным знанием, мне действительно нужна была система, которая объяснила бы мне весь мой опыт на этом пути.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇨🇦</span>
+					<div>
+						<div class="review-name">Уилл Смит</div>
+						<div class="review-loc">Канада, 2013 год</div>
+					</div>
+				</div>
+				<p class="review-text">Моё собственное воскрешение продолжается и сопровождается сильными физическими вибрациями по всему телу. Недавно подруга была поражена, увидев, как я бегу по лестнице, хотя раньше не мог ходить. Теперь становится ясно, что я «чудесным образом» исцелён, и мне нужно быть готовым учить больше людей.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇸</span>
+					<div>
+						<div class="review-name">Гордана Максимович</div>
+						<div class="review-loc">Белград, 2013 год</div>
+					</div>
+				</div>
+				<p class="review-text">Курс был превосходный. Я чувствую большие изменения на духовном и физическом плане. Я гораздо более расслабленная, мой сон улучшился, лучшая коммуникация, мои мечты изменились, я хожу как будто лечу. Искренне надеюсь, что буду присутствовать и следующему семинару.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇺</span>
+					<div>
+						<div class="review-name">Галина Попова</div>
+						<div class="review-loc">Ангарск, 2025 год</div>
+					</div>
+				</div>
+				<p class="review-text">После болезни ухудшились зрение, слух, сильно ухудшилась память. Учитывая возраст (75 лет), выздоровление шло непросто. Но после прохождения 1 ступени наступило облегчение, а после 3 ступеней начинает возвращаться память. Судороги стали реже, перестали выпадать волосы, улучшилось состояние кожи, восстановился сон.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇸</span>
+					<div>
+						<div class="review-name">Игорь Бабич</div>
+						<div class="review-loc">Белград, 2013 год</div>
+					</div>
+				</div>
+				<p class="review-text">Обучение Древо жизни полностью подтвердило мои ожидания, моё ясновидение проснулось, это был мой первый опыт внутренней работы. Практика простая, легка в применении. Семинар был организован в очень хорошем равновесии, спокойствии и дисциплине, что является оптимальным для внутренней работы.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇨🇿</span>
+					<div>
+						<div class="review-name">Татьяна Петрова</div>
+						<div class="review-loc">Чехия, 2025 год</div>
+					</div>
+				</div>
+				<p class="review-text">Милая Наталья, большое спасибо. У меня сейчас много работы с самой собой. Начала возвращаться энергия. Я начинаю видеть каждую ситуацию иначе и, главное, по-другому реагирую на людей. Очень вас люблю и уважаю. Вы — большой Учитель в моей жизни, вы положили старт моему воскрешению.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇺</span>
+					<div>
+						<div class="review-name">Андрей Волков</div>
+						<div class="review-loc">Новосибирская область, 2024 год</div>
+					</div>
+				</div>
+				<p class="review-text">Спасибо большое, очень приятно получить от Вас письмо. Изменения к лучшему, безусловно, есть. Теперь есть понимание, почему это происходит, для чего и как это исправлять. По Вашему совету по воскресеньям начал ходить к Аркадию Наумовичу.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇸</span>
+					<div>
+						<div class="review-name">Милован Вуядинович</div>
+						<div class="review-loc">Белград, 2013 год</div>
+					</div>
+				</div>
+				<p class="review-text">Моя жизнь изменилась с субботы и общения с Натальей. У нас был разговор, где я принял любовь к себе и к другим. Я чувствовал, что наполняюсь любовью и надеждой на лучшее будущее. Я был в этот момент так счастлив, что едва мог дышать — как ребёнок.</p>
+			</div>
+
+			<div class="review-card">
+				<div class="review-header">
+					<span class="review-flag">🇷🇺</span>
+					<div>
+						<div class="review-name">Тамара Гомзар</div>
+						<div class="review-loc">Санкт-Петербург, 2021 год</div>
+					</div>
+				</div>
+				<p class="review-text">Прошло уже несколько дней после окончания Третьей ступени учения «Дерево Жизни», а ощущение наполненности неизвестным не покидает до сих пор. Знания, которые Наталья Леонидовна передаёт с такой любовью, отзываются в теле повышенными вибрациями и ответным посылом от Души и Сознания.</p>
+			</div>
+
+		</div>
+	</div>
+</section>
+
+<!-- ===== КОНТАКТЫ ===== -->
+<section id="contacts" class="section section-contacts">
+	<div class="container">
+		<h2 class="center">Мои контакты</h2>
+		<p class="center muted">Выберите удобный способ связи</p>
+		<div class="contact-grid">
+			<a href="https://vk.com/natali" class="contact-card" target="_blank" rel="noopener">
+				<div class="ci ci-vk">ВК</div>
+				<span>ВКонтакте</span>
+			</a>
+			<a href="https://t.me/natali" class="contact-card" target="_blank" rel="noopener">
+				<div class="ci ci-tg">✈</div>
+				<span>Telegram</span>
+			</a>
+			<a href="https://ok.ru/natali" class="contact-card" target="_blank" rel="noopener">
+				<div class="ci ci-ok">OK</div>
+				<span>Одноклассники</span>
+			</a>
+			<a href="https://max.ru/natali" class="contact-card" target="_blank" rel="noopener">
+				<div class="ci ci-mx">МX</div>
+				<span>MAX</span>
+			</a>
+			<a href="mailto:NataliaFesik@mail.ru" class="contact-card">
+				<div class="ci ci-em">✉</div>
+				<span>Email</span>
+			</a>
+			<a href="https://oplata.ru" class="contact-card" target="_blank" rel="noopener">
+				<div class="ci ci-pay">₽</div>
+				<span>Оплата</span>
+			</a>
+		</div>
+	</div>
+</section>
+
+<footer>
+	<p>© 2026 Наталья Фесик — Методист программы «Древо Жизни»</p>
+</footer>
+
+</body>
+</html>

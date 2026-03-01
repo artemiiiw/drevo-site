@@ -7,8 +7,19 @@
 	<link rel="stylesheet" href="style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+	<style>
+		.version-bar { position: fixed; bottom: 24px; right: 24px; z-index: 300; display: flex; gap: 10px; }
+		.ver-btn { display: block; padding: 10px 18px; border-radius: 999px; font-family: 'Inter', sans-serif; font-size: 13px; text-decoration: none; font-weight: 500; transition: all 0.2s; letter-spacing: 0.3px; }
+		.ver-btn.active { background: #f0d878; color: #1a1200; }
+		.ver-btn.inactive { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.2); }
+	</style>
 </head>
 <body>
+
+<div class="version-bar">
+	<a href="index.html" class="ver-btn active">Версия 1</a>
+	<a href="v2.html" class="ver-btn inactive">Версия 2</a>
+</div>
 
 <nav>
 	<a href="#arkady">Об Аркадии Петрове</a>
