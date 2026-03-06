@@ -190,7 +190,7 @@ nav a[aria-current="page"] {
 .text-block p {
 	font-size: 17px;
 	color: var(--muted);
-	margin-bottom: 15px;
+	margin-bottom: 24px;
 	line-height: 1.88;
 }
 
